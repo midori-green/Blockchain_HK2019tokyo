@@ -41,6 +41,17 @@ export function getIssueRedeemScript(
   ])
 }
 
+export function decodeIssueRedeemScript(redeemScript) {
+  const script = bitbox.Script.decode(redeemScript);
+  return {
+    recoveryPubKey: script[1],
+    recoveryNumBlocks: script[3],
+    univPubKeyHash: script[9],
+    certOwnerPubKeyHash: script[12],
+    digest: script[13],
+  }
+}
+
 /**
  * @param {Buffer} recoveryPubKey
  * @param {number} recoveryNumBlocks
