@@ -59,6 +59,25 @@ export async function getCertSigByTxid(txid) {
 }
 
 /**
+ * @param {string} txid
+ */
+export async function getSpenderScriptSig(txid) {
+  const txDetails = (await bitbox.RawTransactions.getRawTransaction([txid], true))[0]
+
+  // TODO: verify tx
+
+  const targetTxin = txDetails.vin[0]
+
+  const scriptSig = targetTxin.scriptSig.asm.split(' ')
+
+  const certSig = Buffer.from(scriptSig[0], 'hex')
+  const spenderPubKey = Buffer.from(scriptSig[1], 'hex')
+  const txSig = Buffer.from(scriptSig[2], 'hex')
+
+  return {certSig: certSig, spenderPubKey: spenderPubKey, txSig: txSig}
+}
+
+/**
  * @param {Buffer} digest
  * @param {string} hash160
  * @param {Account} account
@@ -112,4 +131,33 @@ export async function signWithCert(account, certSig, prevTxid, redeemScript, vou
   return txid
 }
 
+export async function signWithCertv2(account, certSig, prevTxid, redeemScript, univPubKey, vout = 0) {
+  const txb = new bitbox.TransactionBuilder(network)
+  const txDetails = (await bitbox.RawTransactions.getRawTransaction([prevTxid], true))[0]
+  const output = txDetails.vout[vout]
+
+  // TODO: verify tx and redeemScript
+
+  txb.addInput(prevTxid, vout)
+
+  const balance = bitbox.BitcoinCash.toSatoshi(output.value)
+  const fee = balance - 546 // TBD
+  const outAmount = balance - fee
+  txb.addOutput(account.address, outAmount)
+
+  const hashType = txb.hashTypes.SIGHASH_ALL | txb.hashTypes.SIGHASH_BITCOINCASH_BIP143
+
+  const rawTx = txb.transaction.buildIncomplete()
+  const sighash = rawTx.hashForCashSignature(0, redeemScript, balance, hashType)
+  const txSig = bitbox.ECPair.sign(account.ecpair, sighash).toScriptSignature(hashType)
+
+  const scriptSig = script.getSpenderScriptSigv2(redeemScript, certSig, account.pubKey, univPubKey, txSig)
+  rawTx.setInputScript(0, scriptSig)
+
+  const hex = rawTx.toHex()
+
+  const txid = (await bitbox.RawTransactions.sendRawTransaction(hex))[0]
+
+  return txid
+}
 

@@ -43,13 +43,26 @@ export function getIssueRedeemScript(
 
 export function decodeIssueRedeemScript(redeemScript) {
   const script = bitbox.Script.decode(redeemScript);
-  return {
+
+  const details = {
     recoveryPubKey: script[1],
     recoveryNumBlocks: script[3],
     univPubKeyHash: script[9],
     certOwnerPubKeyHash: script[12],
     digest: script[13],
   }
+
+  if (!getIssueRedeemScript(
+        details.recoveryPubKey,
+        details.recoveryNumBlocks,
+        details.univPubKeyHash,
+        details.digest,
+        details.certOwnerPubKeyHash
+      ).equals(redeemScript)) {
+      throw Error('unexpected redeem script')
+    }
+
+  return details
 }
 
 /**
@@ -89,6 +102,39 @@ export function getVerifyRedeemScript(
   ])
 }
 
+export function getVerifyRedeemScriptv2(
+  recoveryPubKey,
+  recoveryNumBlocks,
+  univPubKeyHash,
+  studentPubKeyHash,
+  digest,
+) {
+  return bitbox.Script.encode([
+    opcodes.OP_IF,
+      recoveryPubKey,
+      opcodes.OP_CHECKSIGVERIFY,
+      Buffer.from([recoveryNumBlocks]),
+      opcodes.OP_CHECKSEQUENCEVERIFY,
+    opcodes.OP_ELSE,             // (certSig, univPubKey, studentPubKey, txSig)
+      opcodes.OP_OVER,           // (certSig, univPubKey, studentPubKey, txSig, studentPubKey)
+      opcodes.OP_DUP,            // (certSig, univPubKey, studentPubKey, txSig, studentPubKey, studentPubKey) <-[begin student's p2pkh]
+      opcodes.OP_HASH160,        // (certSig, univPubKey, studentPubKey, txSig, studentPubKey, hash160(studentPubKey))
+      studentPubKeyHash,         // (certSig, univPubKey, studentPubKey, txSig, studentPubKey, hash160(studentPubKey), studentPubKeyHash)
+      opcodes.OP_EQUALVERIFY,    // (certSig, univPubKey, studentPubKey, txSig, studentPubKey)
+      opcodes.OP_CHECKSIGVERIFY, // (certSig, univPubKey, studentPubKey)                                      <-[end student's p2pkh]
+      opcodes.OP_HASH160,        // (certSig, univPubKey, hash160(studentPubKey))
+      digest,                    // (certSig, univPubKey, hash160(studentPubKey), digest)
+      opcodes.OP_CAT,            // (certSig, univPubKey, hash160(studentPubKey)|digest)
+      opcodes.OP_SWAP,           // (certSig, hash160(studentPubKey)|digest, univPubKey)
+      opcodes.OP_DUP,            // (certSig, hash160(studentPubKey)|digest, univPubKey, univPubKey)
+      opcodes.OP_HASH160,        // (certSig, hash160(studentPubKey)|digest, univPubKey, hash160(univPubKey))
+      univPubKeyHash,            // (certSig, hash160(studentPubKey)|digest, univPubKey, hash160(univPubKey), univPubKeyHash)
+      opcodes.OP_EQUALVERIFY,    // (certSig, hash160(studentPubKey)|digest, univPubKey)
+      opcodes.OP_CHECKDATASIG,   // (true)
+    opcodes.OP_ENDIF,
+  ])
+}
+
 /**
  * @param {Buffer} redeemScript
  * @param {string} network
@@ -112,6 +158,17 @@ export function getP2SHAddress(redeemScript, network) {
 export function getSpenderScriptSig(redeemScript, certSig, spenderPubKey, txSig) {
   return bitbox.Script.encode([
     certSig,
+    spenderPubKey,
+    txSig,
+    opcodes.OP_FALSE,
+    redeemScript,
+  ])
+}
+
+export function getSpenderScriptSigv2(redeemScript, certSig, spenderPubKey, univPubKey, txSig) {
+  return bitbox.Script.encode([
+    certSig,
+    univPubKey,
     spenderPubKey,
     txSig,
     opcodes.OP_FALSE,
