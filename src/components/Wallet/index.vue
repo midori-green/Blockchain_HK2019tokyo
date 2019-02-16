@@ -31,13 +31,14 @@ export default {
       account.getBalance().then((ret) => {
         this.balance = ret
       })
-      localStorage.setItem('wif', account.wif)
+      localStorage.setItem('wif', account.wif) // TODO: encrypt/decrypt wif
+      this.$store.state.account = account
     }
   },
 
   mounted() {
-    const wif = localStorage.getItem('wif')
-    this.updateWallet(wif)
+    account = this.$store.state.account
+    this.updateWallet(account.wif)
   }
 }
 </script>

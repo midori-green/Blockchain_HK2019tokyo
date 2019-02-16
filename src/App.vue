@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import {Account} from './lib/account'
+
 export default {
   data() {
     return {
@@ -47,6 +49,10 @@ export default {
   created() {
   },
   mounted() {
+    if (this.$store.state.account == null) {
+      const wif = localStorage.getItem('wif') // TODO: encrypt/decrypt wif
+      this.$store.state.account = new Account(wif)
+    }
   }
 }
 </script>
