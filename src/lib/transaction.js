@@ -1,9 +1,8 @@
 import BITBOXSDK from 'bitbox-sdk/lib/bitbox-sdk'
 import * as script from './script'
+import {network, bitboxCfg} from './network'
 
-const bitbox = new BITBOXSDK({ restURL: 'https://trest.bitcoin.com/v2/' })
-
-const network = 'testnet'
+const bitbox = new BITBOXSDK(bitboxCfg)
 
 /**
  * @param {Account} account

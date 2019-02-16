@@ -3,18 +3,18 @@
     <b-row>
       <b-col>
         <div class="latest">
-          <h3>Green Verify</h3>
+          <h3>Wallet</h3>
         </div>
       </b-col>
     </b-row>
 
-    <b-row>
-      <b-col class="links">
-        <router-link class="btn btn-success" to="./student/request">学生の方はこちら</router-link><br>
-        <router-link class="btn btn-success" to="./university/sign">大学関係者はこちら</router-link><br>
-        <router-link class="btn btn-success" to="./company/request">企業担当者はこちら</router-link>
-      </b-col>
-    </b-row>
+    Address: {{ address }} <br>
+    Balance: {{ balance }} BCH <br>
+
+    <input type="text" v-model="wif">
+    <button v-on:click="importFromWIF()">Import from WIF</button> <br>
+
+    <button v-on:click="resetWallet()">Reset Wallet</button>
 
     <b-row>
       <b-col>

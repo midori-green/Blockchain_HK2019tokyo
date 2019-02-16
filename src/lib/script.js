@@ -7,7 +7,7 @@ const { opcodes } = bitbox.Script
 /**
  * @param {Buffer} recoveryPubKey
  * @param {number} recoveryNumBlocks
- * @param {Buffer} issuerPubKeyHash
+ * @param {Buffer} univPubKeyHash
  * @param {Buffer} digest
  * @param {Buffer} certOwnerPubKeyHash
  * @return {Buffer}
@@ -15,7 +15,7 @@ const { opcodes } = bitbox.Script
 export function getIssueRedeemScript(
   recoveryPubKey,
   recoveryNumBlocks,
-  issuerPubKeyHash,
+  univPubKeyHash,
   digest,
   certOwnerPubKeyHash,
 ) {
@@ -25,17 +25,17 @@ export function getIssueRedeemScript(
       opcodes.OP_CHECKSIGVERIFY,
       Buffer.from([recoveryNumBlocks]),
       opcodes.OP_CHECKSEQUENCEVERIFY,
-    opcodes.OP_ELSE,             // (certSig, issuerPubKey, txSig)
-      opcodes.OP_OVER,           // (certSig, issuerPubKey, txSig, issuerPubKey)
-      opcodes.OP_DUP,            // (certSig, issuerPubKey, txSig, issuerPubKey, issuerPubKey) <-[begin spender's p2pkh]
-      opcodes.OP_HASH160,        // (certSig, issuerPubKey, txSig, issuerPubKey, hash160(issuerPubKey))
-      issuerPubKeyHash,          // (certSig, issuerPubKey, txSig, issuerPubKey, hash160(issuerPubKey), issuerPubKeyHash)
-      opcodes.OP_EQUALVERIFY,    // (certSig, issuerPubKey, txSig, issuerPubKey)
-      opcodes.OP_CHECKSIGVERIFY, // (certSig, issuerPubKey)                                    <-[end spender's p2pkh]
-      certOwnerPubKeyHash,       // (certSig, issuerPubKey, certOwnerPubKeyHash)
-      digest,                    // (certSig, issuerPubKey, certOwnerPubKeyHash, digest)
-      opcodes.OP_CAT,            // (certSig, issuerPubKey, certOwnerPubKeyHash|digest)
-      opcodes.OP_SWAP,           // (certSig, certOwnerPubKeyHash|digest, issuerPubKey)
+    opcodes.OP_ELSE,             // (certSig, univPubKey, txSig)
+      opcodes.OP_OVER,           // (certSig, univPubKey, txSig, univPubKey)
+      opcodes.OP_DUP,            // (certSig, univPubKey, txSig, univPubKey, univPubKey) <-[begin univ's p2pkh]
+      opcodes.OP_HASH160,        // (certSig, univPubKey, txSig, univPubKey, hash160(univPubKey))
+      univPubKeyHash,          // (certSig, univPubKey, txSig, univPubKey, hash160(univPubKey), univPubKeyHash)
+      opcodes.OP_EQUALVERIFY,    // (certSig, univPubKey, txSig, univPubKey)
+      opcodes.OP_CHECKSIGVERIFY, // (certSig, univPubKey)                                    <-[end univ's p2pkh]
+      certOwnerPubKeyHash,       // (certSig, univPubKey, certOwnerPubKeyHash)
+      digest,                    // (certSig, univPubKey, certOwnerPubKeyHash, digest)
+      opcodes.OP_CAT,            // (certSig, univPubKey, certOwnerPubKeyHash|digest)
+      opcodes.OP_SWAP,           // (certSig, certOwnerPubKeyHash|digest, univPubKey)
       opcodes.OP_CHECKDATASIG,   // (true)
     opcodes.OP_ENDIF,
   ])
@@ -44,16 +44,16 @@ export function getIssueRedeemScript(
 /**
  * @param {Buffer} recoveryPubKey
  * @param {number} recoveryNumBlocks
- * @param {Buffer} issuerPubKey
- * @param {Buffer} spenderPubKeyHash
+ * @param {Buffer} univPubKey
+ * @param {Buffer} studentPubKeyHash
  * @param {Buffer} digest
  * @return {Buffer}
  */
-export function getCertRedeemScript(
+export function getVerifyRedeemScript(
   recoveryPubKey,
   recoveryNumBlocks,
-  issuerPubKey,
-  spenderPubKeyHash,
+  univPubKey,
+  studentPubKeyHash,
   digest,
 ) {
   return bitbox.Script.encode([
@@ -62,17 +62,17 @@ export function getCertRedeemScript(
       opcodes.OP_CHECKSIGVERIFY,
       Buffer.from([recoveryNumBlocks]),
       opcodes.OP_CHECKSEQUENCEVERIFY,
-    opcodes.OP_ELSE,             // (certSig, spenderPubKey, txSig)
-      opcodes.OP_OVER,           // (certSig, spenderPubKey, txSig, spenderPubKey)
-      opcodes.OP_DUP,            // (certSig, spenderPubKey, txSig, spenderPubKey, spenderPubKey) <-[begin spender's p2pkh]
-      opcodes.OP_HASH160,        // (certSig, spenderPubKey, txSig, spenderPubKey, hash160(spenderPubKey))
-      spenderPubKeyHash,         // (certSig, spenderPubKey, txSig, spenderPubKey, hash160(spenderPubKey), spenderPubKeyHash)
-      opcodes.OP_EQUALVERIFY,    // (certSig, spenderPubKey, txSig, spenderPubKey)
-      opcodes.OP_CHECKSIGVERIFY, // (certSig, spenderPubKey)                                      <-[end spender's p2pkh]
-      opcodes.OP_HASH160,        // (certSig, hash160(spenderPubKey))
-      digest,                    // (certSig, hash160(spenderPubKey), digest)
-      opcodes.OP_CAT,            // (certSig, hash160(spenderPubKey)|digest)
-      issuerPubKey,              // (certSig, hash160(spenderPubKey)|digest, issuerPubKey)
+    opcodes.OP_ELSE,             // (certSig, studentPubKey, txSig)
+      opcodes.OP_OVER,           // (certSig, studentPubKey, txSig, studentPubKey)
+      opcodes.OP_DUP,            // (certSig, studentPubKey, txSig, studentPubKey, studentPubKey) <-[begin student's p2pkh]
+      opcodes.OP_HASH160,        // (certSig, studentPubKey, txSig, studentPubKey, hash160(studentPubKey))
+      studentPubKeyHash,         // (certSig, studentPubKey, txSig, studentPubKey, hash160(studentPubKey), studentPubKeyHash)
+      opcodes.OP_EQUALVERIFY,    // (certSig, studentPubKey, txSig, studentPubKey)
+      opcodes.OP_CHECKSIGVERIFY, // (certSig, studentPubKey)                                      <-[end student's p2pkh]
+      opcodes.OP_HASH160,        // (certSig, hash160(studentPubKey))
+      digest,                    // (certSig, hash160(studentPubKey), digest)
+      opcodes.OP_CAT,            // (certSig, hash160(studentPubKey)|digest)
+      univPubKey,              // (certSig, hash160(studentPubKey)|digest, univPubKey)
       opcodes.OP_CHECKDATASIG,   // (true)
     opcodes.OP_ENDIF,
   ])
