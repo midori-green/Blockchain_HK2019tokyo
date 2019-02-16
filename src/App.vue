@@ -2,7 +2,7 @@
   <div id="app">
     <header>
       <div>
-        <router-link id="logo" class="btn" to="/"></router-link>
+        <router-link id="logo" class="btn" to="/">Verify.green</router-link>
         <template v-if="dev">
           <a class="btn" v-on:click="switchUser('student')"><img :src="student"></a>
           <a class="btn" v-on:click="switchUser('university')"><img :src="university"></a>
