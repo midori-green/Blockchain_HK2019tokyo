@@ -3,13 +3,13 @@
     <b-row>
       <b-col>
         <div class="latest">
-          <h3>Wallet</h3>
+          <h4>ウォレット情報</h4>
         </div>
       </b-col>
     </b-row>
 
-    Address: {{ address }} <br>
-    Balance: {{ balance }} BCH <br>
+    アドレス: {{ address }} <br>
+    残高: {{ balance }} BCH <br>
 
     <input type="text" v-model="wif">
     <button v-on:click="importFromWIF()">Import from WIF</button> <br>
