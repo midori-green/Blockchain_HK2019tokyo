@@ -12,7 +12,7 @@ export class Account {
       const mnemonic = bitbox.Mnemonic.generate();
       const seed = bitbox.Mnemonic.toSeed(mnemonic);
       const root = bitbox.HDNode.fromSeed(seed, network);
-      const node = bitbox.HDNode.derivePath(root, `m/44'/145'/0'/0`)
+      const node = bitbox.HDNode.derivePath(root, `m/44'/145'/0'/0`);
       this.wif = bitbox.HDNode.toWIF(node);
     } else {
       this.wif = wif;
