@@ -29,12 +29,14 @@
     </b-row>
 
     <b-row class="input_fields">
-      <b-col class="wif">
-        <b-form-input type="text" v-model="wif" />
-      </b-col>
-
-      <b-col>
-        <b-button class="btn btn-success" v-on:click="importWIF">WIFからウォレット作成</b-button>
+      <b-col class="wif_file">
+        <b-form-file
+          id="wif_file"
+          v-model="wif_file"
+          :state="Boolean(wif_file)"
+          placeholder="WIFからウォレット作成"
+          drop-placeholder="WIFをドラッグ＆ドロップしてください"
+        />
       </b-col>
     </b-row>
 

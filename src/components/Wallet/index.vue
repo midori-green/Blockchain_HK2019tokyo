@@ -11,6 +11,7 @@ export default {
     return {
       balance: null,
       address: null,
+      wif_file: null,
       wif: null,
     }
   },
@@ -63,7 +64,25 @@ export default {
       blob.download(wif, `wif_${accountType}.txt`)
     }
   },
+  watch: {
+    wif_file(v) {
+      let allAttributes = [...document.querySelectorAll('*')]
+      allAttributes.map(e => {
+        e.setAttribute("disabled", "disabled")
+      })
+      let file = document.getElementById("wif_file").files[0]
+      var fileReader = new FileReader();
+      fileReader.onload = e => {
+        this.wif = e.target.result.trim()
+        this.importWIF()
 
+        allAttributes.map(e => {
+          e.removeAttribute("disabled")
+        })
+      }
+      fileReader.readAsText(file);
+    }
+  },
   mounted() {
     account = this.$store.state.account
     this.updateWallet(account.wif)
