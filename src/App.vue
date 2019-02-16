@@ -195,6 +195,11 @@ header .btn {
   margin-left: 2%;
 }
 
+/* Main */
+#main .btn-success {
+  color: white;
+}
+
 /* footer */
 
 footer {
@@ -247,17 +252,4 @@ footer + #btn-notify {
   color: white !important;
 }
 
-/* ??? */
-
-#secret_btn {
-  margin-top: 30px;
-  color:#e1fae1;
-  width: 90vw;
-  height: 200px;
-  font-size: 100px;
-}
-
-#secret_btn:hover {
-  background-color: white;
-}
 </style>
