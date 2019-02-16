@@ -2,24 +2,57 @@
   <b-container>
     <b-row>
       <b-col>
-        <div class="latest">
-          <h3>aaa</h3>
-          <router-link class="latest btn btn-success" to="./block_latest">⚡Block 3⚡</router-link>
+        <div>
+          <h3>証明書への署名発行</h3>
         </div>
       </b-col>
     </b-row>
-
-    <b-row>
-      <b-col class="old">
-        <h4>bbb</h4>
-        <router-link class="btn btn-success" to="./block/1">Block 1</router-link>
-        <router-link class="btn btn-success" to="./block/2">Block 2</router-link>
+    <b-row class="input_fields">
+      <b-col>
+        <p>学生の証明書、メタデータ、及びそのハッシュ値を入力してください。</p>
+        <b-form-file
+          id="cert"
+          v-model="cert"
+          :state="Boolean(cert)"
+          placeholder="証明書をアップロードしてください"
+          drop-placeholder="証明書をドラッグ＆ドロップしてください"
+        />
+      </b-col>
+    </b-row>
+    <b-row class="input_fields">
+      <b-col>
+        <b-form-file id="meta"
+          v-model="meta" :state="Boolean(cert)" placeholder="メタデータをアップロードしてください"
+          drop-placeholder="メタデータをドラッグ＆ドロップしてください" />
+      </b-col>
+    </b-row>
+    <b-row class="input_fields">
+      <b-col>
+        <b-form-input v-model="hash" type="text" placeholder="ハッシュ値を入力してください" />
       </b-col>
     </b-row>
 
-    <b-row>
+    <b-row class="input_fields">
       <b-col>
-        <div class="notify" id="notify"></div>
+        <b-form-input type="text" v-model="redeemScript" placeholder="Redeem Script を入れてください" />
+      </b-col>
+    </b-row>
+
+    <b-row class="input_fields">
+      <b-col>
+        <b-form-input type="text" v-model="txid" placeholder="学生が作成したトランザクションのIDを入れてください" />
+      </b-col>
+    </b-row>
+
+    <b-row class="input_fields">
+      <b-col>
+        <b-form-input type="text" v-model="email" placeholder="学生のemailを入れてください" />
+      </b-col>
+    </b-row>
+
+    <b-row class="input_fields">
+      <b-col>
+        <b-button ref="submit" type="submit" class="btn btn-success" v-on:click="sign">署名する</b-button>
       </b-col>
     </b-row>
   </b-container>
