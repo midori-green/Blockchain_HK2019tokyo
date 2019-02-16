@@ -16,8 +16,8 @@ export default {
     }
   },
   mounted() {
-    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid}
-以上の情報を検証し、正しければ以下のリンクから署名をしてください。
+    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid}　
+以上の情報を検証し、正しければ以下のリンクから署名をしてください。　
 http://localhost:8101/university/sign?redeemScript=${this.redeemScript}&txid=${this.txid}`
 
     this.email_link = `mailto:${this.email}?subject=${this.subject}&amp;body=${this.body}`
