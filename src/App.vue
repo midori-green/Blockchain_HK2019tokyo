@@ -1,72 +1,77 @@
 <template>
-	<div id="app">
-		<header>
-			<div>
-				<router-link id="logo" class="btn" to="/">Green Verify</router-link>
-				<router-link id="logo" class="btn" to="/test">Test</router-link>
-			</div>
-		</header>
-		<router-view id="main" />
+  <div id="app">
+    <header>
+      <div>
+        <router-link id="logo" class="btn" to="/">Green Verify</router-link>
+        <router-link id="logo" class="btn" to="/student/request"><img :src="user"></router-link>
+        <router-link id="logo" class="btn" to="/university/sign"><img :src="issuer"></router-link>
+        <router-link id="logo" class="btn" to="/company/request"><img :src="verifier"></router-link>
+      </div>
+    </header>
+    <router-view id="main" />
 
-		<footer id="footer">
-			<b-col>
-				<div class="contact">
-					<a href="mailto:m@jiyu.green" target="_blank">contact</a>
-				</div>
+    <footer id="footer">
+      <b-col>
+        <div class="contact">
+          <a href="mailto:m@jiyu.green" target="_blank">contact</a>
+        </div>
 
-				<div class="license">
-					[MIT License] Copyright (c) 2019 MIDORI, LLC.
-				</div>
-			</b-col>
-		</footer>
-	</div>
+        <div class="license">
+          [MIT License] Copyright (c) 2019 MIDORI, LLC.
+        </div>
+      </b-col>
+    </footer>
+  </div>
 </template>
 
 <script>
 export default {
-	data() {
-		return {
-			cc_url: `http://creativecommons.org/licenses/by-nc/4.0/deed.ja`,
-		}
-	},
-	watch: {
-	},
-	methods: {
-	},
-	created() {
-	},
-	mounted() {
-	}
+  data() {
+    return {
+      cc_url: `http://creativecommons.org/licenses/by-nc/4.0/deed.ja`,
+      user: require("./images/student.svg"),
+      issuer: require("./images/university.svg"),
+      verifier: require("./images/company.svg")
+    }
+  },
+  watch: {
+  },
+  methods: {
+  },
+  created() {
+  },
+  mounted() {
+  }
 }
 </script>
 
 <style>
 /* Common */
 html, #app, img, header {
-	background-color: #e1fae1 !important;
-	font-size: 18px;
+  background-color: #e1fae1 !important;
+  font-size: 18px;
 }
 
 #app {
-	font-family: 'Avenir', Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-	margin-top: 60px;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 
 body {
-	font-size: 3rem;
-	background-color: #e6ffe6;
+  font-size: 3rem;
+  background-color: #e6ffe6;
 }
 
 #locale {
-	font-size: 14px;
+  font-size: 14px;
 }
 
 .container {
-	max-width: 800px !important;
+  max-width: 800px !important;
 }
 
 /* Heading */
@@ -93,150 +98,154 @@ h6 {
 /* Button */
 
 .btn-success {
-	background-image: -webkit-linear-gradient(top,#5cb85c 0,#419641 100%);
-	background-image: -o-linear-gradient(top,#5cb85c 0,#419641 100%);
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#5cb85c),to(#419641));
-	background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-	background-repeat: repeat-x;
-	border-color: #3e8f3e;
+  background-image: -webkit-linear-gradient(top,#5cb85c 0,#419641 100%);
+  background-image: -o-linear-gradient(top,#5cb85c 0,#419641 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#5cb85c),to(#419641));
+  background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  background-repeat: repeat-x;
+  border-color: #3e8f3e;
 }
 
 .btn-default {
-	text-shadow: 0 1px 0 #fff;
-	background-image: -webkit-linear-gradient(top,#fff 0,#e0e0e0 100%);
-	background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
-	background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-	background-repeat: repeat-x;
-	border-color: #000;
+  text-shadow: 0 1px 0 #fff;
+  background-image: -webkit-linear-gradient(top,#fff 0,#e0e0e0 100%);
+  background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
+  background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  background-repeat: repeat-x;
+  border-color: #000;
 }
 
 /* Anker */
 
 a:link {
-	color: green;
+  color: green;
 }
 a:visited {
-	color: darkgreen;
+  color: darkgreen;
 }
 a:hover {
-	color: green !important;
+  color: green !important;
 }
 a:active {
-	color: green;
+  color: green;
 }
 
 /* Header */
 
 header {
-	width: 100%;
-	position: fixed;
-	top: 0;
-	border-bottom: 1px solid darkgreen;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 9999;
-	height: 45px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  border-bottom: 1px solid darkgreen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  height: 45px;
+}
+
+header img {
+  height: 35px;
 }
 
 header > div {
-	width: 100%;
-	max-width: 750px;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 header a {
-	color:green;
-	font-weight: normal !important;
+  color:green;
+  font-weight: normal !important;
 }
 
 header a:hover {
-	color: green;
+  color: green;
 }
 
 header a:active {
-	color: green;
+  color: green;
 }
 
 header a:visited {
-	color: darkgreen;
+  color: darkgreen;
 }
 
 header .btn {
-	margin-left: 2%;
+  margin-left: 2%;
 }
 
 /* footer */
 
 footer {
-	border-top: 1px solid darkgreen;
-	margin-top: 50px;
+  border-top: 1px solid darkgreen;
+  margin-top: 50px;
 }
 
 footer + #btn-notify {
-	display: none !important;
+  display: none !important;
 }
 
 .twitter, .facebook {
-	width: 10%;
-	max-width: 50px;
-	margin-left: 10px;
+  width: 10%;
+  max-width: 50px;
+  margin-left: 10px;
 }
 
 #twitter-widget-1 {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 
 .facebook {
-	margin-top: 10px;
-	margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .fb-like {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 
 .license {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 /* Ads */
 
 .gc_ad_main {
-	display: none;
+  display: none;
 }
 
 /* Vue Toast */
 .toasted.bubble {
-	background-color: limegreen !important;
-	border-color: limegreen !important;
+  background-color: limegreen !important;
+  border-color: limegreen !important;
 }
 
 .toasted.outline {
-	background-color: #dc3545 !important;
-	border-color: #dc3545 !important;
-	color: white !important;
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: white !important;
 }
 
 /* ??? */
 
 #secret_btn {
-	margin-top: 30px;
-	color:#e1fae1;
-	width: 90vw;
-	height: 200px;
-	font-size: 100px;
+  margin-top: 30px;
+  color:#e1fae1;
+  width: 90vw;
+  height: 200px;
+  font-size: 100px;
 }
 
 #secret_btn:hover {
-	background-color: white;
+  background-color: white;
 }
 </style>
