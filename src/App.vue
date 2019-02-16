@@ -3,9 +3,9 @@
     <header>
       <div>
         <router-link id="logo" class="btn" to="/">Green Verify</router-link>
-        <router-link id="logo" class="btn" to="/student/request"><img :src="user"></router-link>
-        <router-link id="logo" class="btn" to="/university/sign"><img :src="issuer"></router-link>
-        <router-link id="logo" class="btn" to="/company/request"><img :src="verifier"></router-link>
+        <router-link id="logo" class="btn" to="/student/request"><img :src="student"></router-link>
+        <router-link id="logo" class="btn" to="/university/sign"><img :src="university"></router-link>
+        <router-link id="logo" class="btn" to="/company/request"><img :src="company"></router-link>
       </div>
     </header>
     <router-view id="main" />
@@ -29,9 +29,9 @@ export default {
   data() {
     return {
       cc_url: `http://creativecommons.org/licenses/by-nc/4.0/deed.ja`,
-      user: require("./images/student.svg"),
-      issuer: require("./images/university.svg"),
-      verifier: require("./images/company.svg")
+      student: require("./images/student.svg"),
+      university: require("./images/university.svg"),
+      company: require("./images/company.svg")
     }
   },
   watch: {
