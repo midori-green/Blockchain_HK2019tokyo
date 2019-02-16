@@ -12,32 +12,12 @@ export default new Router({
 			name: 'Home',
 			// lazy load
 			component: () => import(/* webpackChunkName: "about" */ './components/Home/index.vue'),
-			meta: { skipAuth: true }
 		},
 		{
-			path: '/',
+			path: '/test',
 			name: 'Test',
 			// lazy load
 			component: () => import(/* webpackChunkName: "about" */ './components/Test/index.vue'),
-			meta: { skipAuth: true }
-		},
-		{
-			path: '/block/:id',
-			name: 'Block',
-			// lazy load
-			component: () => import(/* webpackChunkName: "about" */ './components/Block/index.vue')
-		},
-		{
-			path: '/block_latest',
-			name: 'BlockLatest',
-			// lazy load
-			component: () => import(/* webpackChunkName: "about" */ './components/BlockLatest/index.vue')
-		},
-		{
-			path: '/block_latest_test',
-			name: 'BlockLatestTest',
-			// lazy load
-			component: () => import(/* webpackChunkName: "about" */ './components/BlockLatest/index.vue')
 		},
 		{
 			path: '/license',
