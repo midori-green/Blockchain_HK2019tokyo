@@ -16,6 +16,7 @@ export default {
       meta: null,
       hash: null,
       pubkey: this.$route.query.UnivPubKey,
+      univAddress: this.$route.query.univAddress,
       studentMail: this.$route.query.studentMail,
       replyMail: this.$route.query.studentMail,
       studentAddress: this.$route.query.studentAddress,
@@ -31,16 +32,15 @@ export default {
       if(merged === this.hash) {
         const account = this.$store.state.account
         const studentHash160 = Buffer.from(bitbox.Address.toHash160(this.studentAddress), 'hex')
-        const redeemScript = script.getVerifyRedeemScript(
+        const redeemScript = script.getVerifyRedeemScriptv2(
           account.pubKey,
           3,
-          Buffer.from(this.pubkey, 'hex'),
+          Buffer.from(bitbox.Address.toHash160(this.univAddress), 'hex'),
           studentHash160,
           Buffer.from(merged, 'hex')
         )
         const destAddress = script.getP2SHAddress(redeemScript, network)
         const txid = await txn.simpleSend(account, destAddress, 1000)
-        // const txid = 'dummy-txid'
 
         this.$router.push({
           path: 'requested',
@@ -89,7 +89,7 @@ export default {
   created() {
     if(localStorage.getItem("dev") != null) {
       this.hash = "679f02ca9d9c789175af3a75dd6b88d5c05f734f0abfe3b61ed9178175f11152"
-      this.pubkey = "02ec6cf9a8d7281fd89ecde4f5ccfc09290785e56f1080861ec33a86a8096ed646",
+      this.univAddress = "bitcoincash:qqlqejqa47kxt0kyyal9zzd0aejjlh60jvea5m6ez5"
       this.studentMail = "m@jiyu.green"
       this.replyMail = "m@jiyu.green"
       this.studentAddress = "bitcoincash:qzqczdggrycp969lxtup0qmszltsfpv2hufexsxjg0"

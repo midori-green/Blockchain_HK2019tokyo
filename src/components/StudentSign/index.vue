@@ -18,9 +18,9 @@ export default {
       this.$refs.submit.setAttribute("disabled", true)
 
       const account = this.$store.state.account
-      const certSig = await txn.getCertSigByTxid(this.certTxid)
+      const {certSig, spenderPubKey} = await txn.getSpenderScriptSig(this.certTxid)
       const redeemScript = Buffer.from(this.redeemScript, 'hex')
-      const txid = await txn.signWithCert(account, certSig, this.txid, redeemScript)
+      const txid = await txn.signWithCertv2(account, certSig, this.txid, redeemScript, spenderPubKey)
       this.$router.push({path: 'signed', query: { txid: txid, email: this.email }})
 
       this.$refs.submit.removeAttribute("disabled")
