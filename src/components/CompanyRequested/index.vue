@@ -3,7 +3,7 @@
 
 <script>
 export default {
-  created() {
+  mounted() {
   }
 }
 </script>
