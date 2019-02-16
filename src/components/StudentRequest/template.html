@@ -5,12 +5,11 @@
         <h4>証明書の登録を大学に請求する</h4>
         <p>大学から受け取った証明書、メタデータ、及びそのハッシュ値を入力してください。</p>
         <b-form-file
-          ref="cert"
+          id="cert"
           v-model="cert"
           :state="Boolean(cert)"
           placeholder="証明書をアップロードしてください"
           drop-placeholder="証明書をドラッグ＆ドロップしてください"
-          v-on:change=""
         />
       </b-col>
     </b-row>

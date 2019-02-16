@@ -12,6 +12,13 @@ export default {
       hash: null
     }
   },
+  methods: {
+  },
+  watch: {
+    cert(v) {
+      console.log(document.getElementById("cert").files[0])
+    }
+  },
   mounted() {
   }
 }
