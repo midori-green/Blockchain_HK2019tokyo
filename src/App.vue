@@ -3,9 +3,9 @@
     <header>
       <div>
         <router-link id="logo" class="btn" to="/">Green Verify</router-link>
-        <router-link id="logo" class="btn" to="/student/request"><img :src="student"></router-link>
-        <router-link id="logo" class="btn" to="/university/sign"><img :src="university"></router-link>
-        <router-link id="logo" class="btn" to="/company/request"><img :src="company"></router-link>
+        <a class="btn" v-on:click="switchUser('student')"><img :src="student"></a>
+        <a class="btn" v-on:click="switchUser('university')"><img :src="university"></a>
+        <a class="btn" v-on:click="switchUser('company')"><img :src="company"></a>
       </div>
     </header>
     <router-view id="main" />
@@ -37,6 +37,12 @@ export default {
   watch: {
   },
   methods: {
+    switchUser(user) {
+      if(["student", "university", "company"].indexOf(user) != -1) {
+        localStorage.setItem("accountType", user)
+        console.log(`AccountType has been changed to ${user}.`)
+      }
+    }
   },
   created() {
   },
