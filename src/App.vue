@@ -40,6 +40,28 @@ export default {
     }
   },
   watch: {
+    "$route"(v) {
+      if(localStorage.getItem("dev")) {
+        let wif = null
+        if(v.path.includes("student")) {
+          this.switchUser("student")
+          wif = "L3Mq8X2tq95WYySdwo8HZtoEmVDnKGfdb6pTozq1nd8qrMaBhXvb"
+        } else if(v.path.includes("university")) {
+          this.switchUser("university")
+          wif = "L378rkMAtZVXcsztHH4czvcr1ir9AXwqc166EXLdHiL2AAGQCeia"
+        } else if(v.path.includes("company")) {
+          this.switchUser("company")
+          wif = "L2Xh3PKNCDK1CXHvtuMKCXv4pPbh6sjsWTehdRP77ERwnMkf1VWx"
+        } else {
+          return false
+        }
+
+        let account = new Account(wif)
+        this.address = account.address
+        localStorage.setItem('wif', account.wif) // TODO: encrypt/decrypt wif
+        this.$store.state.account = account
+      }
+    }
   },
   methods: {
     switchUser(user) {

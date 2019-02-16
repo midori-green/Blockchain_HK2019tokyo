@@ -76,6 +76,12 @@ export default {
         this.wif = e.target.result.trim()
         this.importWIF()
 
+        this.$toasted.show("Succeed to update!", {
+          theme: "bubble",
+          position: "top-center",
+          duration : 1500
+        })
+
         allAttributes.map(e => {
           e.removeAttribute("disabled")
         })
