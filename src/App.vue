@@ -19,7 +19,7 @@
         </div>
 
         <div class="license">
-          [MIT License] Copyright (c) 2019 MIDORI, LLC.
+          [MIT License] このアプリは<a href="https://www.eventbrite.com/e/2019-tickets-55006025503" target="_blank">ブロックチェーンハッカソン2019</a>提出作品です。
         </div>
       </b-col>
     </footer>
