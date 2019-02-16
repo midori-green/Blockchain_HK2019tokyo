@@ -20,7 +20,7 @@ export default {
 以上の情報を検証し、正しければ以下のリンクから署名をしてください。　
 http://localhost:8101/university/sign?redeemScript=${this.redeemScript}&txid=${this.txid}`
 
-    this.email_link = `mailto:${this.email}?subject=${this.subject}&amp;body=${this.body}`
+    this.email_link = `mailto:${this.email}?subject=${this.subject}&body=${this.body}`
   }
 }
 </script>
