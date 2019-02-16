@@ -18,10 +18,10 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './components/StudentRequest/index.vue')
     },
     {
-      path: '/student/request',
-      name: 'StudentRequest',
+      path: '/student/requested',
+      name: 'StudentRequested',
       // lazy load
-      component: () => import(/* webpackChunkName: "about" */ './components/Test/index.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './components/StudentRequested/index.vue'),
     },
     {
       path: '/university/sign',
@@ -70,6 +70,17 @@ export default new Router({
       name: 'Wallet',
       // lazy load
       component: () => import(/* webpackChunkName: "about" */ './components/Wallet/index.vue')
+    },
+    {
+      path: '/test',
+      name: 'test',
+      // lazy load
+      component: () => import(/* webpackChunkName: "about" */ './components/Test/index.vue')
+    },
+    {
+      path: "*",
+      // lazy load
+      component: () => import('./components/404/index.vue'),
     }
   ]
 })
