@@ -2,23 +2,34 @@
   <b-container>
     <b-row>
       <b-col>
-        <div class="latest">
-          <h4>ウォレット情報</h4>
-        </div>
+        <h4>ウォレットの管理</h4>
       </b-col>
     </b-row>
 
-    アドレス: {{ address }} <br>
-    残高: {{ balance }} BCH <br>
-
-    <input type="text" v-model="wif">
-    <button v-on:click="importFromWIF()">Import from WIF</button> <br>
-
-    <button v-on:click="resetWallet()">Reset Wallet</button>
-
-    <b-row>
+    <b-row class="input_fields">
       <b-col>
-        <div class="notify" id="notify"></div>
+        <h5>ウォレット情報</h5>
+        アドレス: {{ address }} <br>
+        残高: {{ balance }} BCH <br>
+      </b-col>
+    </b-row>
+
+    <b-row class="input_fields">
+      <b-col>
+        <h5>ウォレット情報</h5>
+        <b-form-input type="text" v-model="wif" />
+      </b-col>
+    </b-row>
+
+    <b-row class="input_fields">
+      <b-col>
+        <b-button class="btn btn-success" v-on:click="importWIF">WIFをインポート</b-button>
+      </b-col>
+    </b-row>
+
+    <b-row class="input_fields">
+      <b-col>
+        <b-button v-on:click="resetWallet">ウォレットを作り直す</b-button>
       </b-col>
     </b-row>
   </b-container>
