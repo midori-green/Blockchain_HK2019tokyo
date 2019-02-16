@@ -35,7 +35,7 @@ export default {
           3,
           Buffer.from(bitbox.Address.toHash160(this.address), 'hex'),
           Buffer.from(merged, 'hex'),
-          Buffer.from(bitbox.Address.toHash160(account.hash160, 'hex')),
+          Buffer.from(account.hash160, 'hex'),
         )
         const destAddress = script.getP2SHAddress(redeemScript, network)
 
