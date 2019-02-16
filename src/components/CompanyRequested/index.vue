@@ -17,7 +17,7 @@ export default {
     }
   },
   mounted() {
-    let link_url = `http://localhost:8101/student/sign?redeemScript=${this.redeemScript}&txid=${this.txid}&email=${this.replyEmail}`
+    let link_url = `http://${location.host}/student/sign?redeemScript=${this.redeemScript}&txid=${this.txid}&email=${this.replyEmail}`
     link_url = encodeURIComponent(link_url)
     this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid},
 
