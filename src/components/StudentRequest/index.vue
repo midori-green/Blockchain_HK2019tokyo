@@ -10,31 +10,56 @@ export default {
     return {
       cert: null,
       meta: null,
-      hash: null
+      hash: this.$route.query.hash,
+      hashed_cert: null,
+      hashed_meta: null
     }
   },
   methods: {
+    sha256(v) {
+      return bitbox.Crypto.sha256(v).toString("hex")
+    },
+    verifyAndSend() {
+      let merged = this.sha256(this.hashed_cert + this.hashed_meta)
+
+      if(merged === this.hash) {
+        this.$router.push("/")
+      } else {
+        alert("Verification Failed")
+      }
+    },
+    saveHash(key, value) {
+      this[key] = value
+    }
   },
   watch: {
     cert(v) {
-      // var createObjectURL = window.URL && window.URL.createObjectURL
-      //   ? function(file) { return window.URL.createObjectURL(file); }
-      //   : window.webkitURL && window.webkitURL.createObjectURL
-      //   ? function(file) { return window.webkitURL.createObjectURL(file); }
-      //   : undefined;
+      this.$refs.submit.setAttribute("disabled", true)
+
       let file = document.getElementById("cert").files[0]
       var fileReader = new FileReader();
       fileReader.onload = e => {
         let raw = e.target.result
         var rawBytes = new Uint8Array(raw);
-        let hashedData = bitbox.Crypto.sha256(rawBytes).toString("hex")
-        if(hashedData === this.hash) {
-        } else {
-          console.log(hashedData, this.hash)
-        }
+        this.hashed_cert = this.sha256(rawBytes).toString("hex")
+
+        this.$refs.submit.removeAttribute("disabled")
       }
       fileReader.readAsArrayBuffer(file);
+    },
+    meta(v) {
+      this.$refs.submit.setAttribute("disabled", true)
 
+      let file = document.getElementById("meta").files[0]
+      var fileReader = new FileReader();
+      fileReader.onload = e => {
+        let raw = e.target.result
+        var rawBytes = new Uint8Array(raw);
+        this.hashed_meta = this.sha256(rawBytes).toString("hex")
+
+        this.$refs.submit.removeAttribute("disabled")
+      }
+      fileReader.readAsArrayBuffer(file);
     }
   },
   mounted() {
