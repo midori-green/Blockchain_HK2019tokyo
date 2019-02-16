@@ -9,9 +9,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      // lazy load
-      component: () => import(/* webpackChunkName: "about" */ './components/Home/index.vue'),
+      redirect: "/wallet"
     },
     {
       path: '/student/request',
