@@ -27,20 +27,14 @@
 <script>
 export default {
   data() {
-    let _account = JSON.parse(localStorage.getItem("account"))
-
     return {
       cc_url: `http://creativecommons.org/licenses/by-nc/4.0/deed.ja`,
       student: require("./images/student.svg"),
       university: require("./images/university.svg"),
       company: require("./images/company.svg"),
-      account: _account ? _account : ""
     }
   },
   watch: {
-    account(v) {
-      localStorage.setItem("account", JSON.stringify(v))
-    }
   },
   methods: {
     switchUser(user) {
