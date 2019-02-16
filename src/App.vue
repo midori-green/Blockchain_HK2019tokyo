@@ -55,8 +55,16 @@ export default {
     }
   },
   created() {
-    this.isTest()
-    this.switchUser(localStorage.getItem("accountType"))
+    setTimeout(() => {
+      if(this.$route.query.dev != null) {
+        localStorage.setItem('test', "1")
+      }
+      if(this.$route.query.dev == null) {
+        localStorage.removeItem('test')
+      }
+      this.isTest()
+      this.switchUser(localStorage.getItem("accountType"))
+    }, 500)
   },
   mounted() {
     if (this.$store.state.account == null) {
