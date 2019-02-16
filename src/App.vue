@@ -3,7 +3,7 @@
     <header>
       <div>
         <router-link id="logo" class="btn" to="/">Green Verify</router-link>
-        <template v-if="test">
+        <template v-if="dev">
           <a class="btn" v-on:click="switchUser('student')"><img :src="student"></a>
           <a class="btn" v-on:click="switchUser('university')"><img :src="university"></a>
           <a class="btn" v-on:click="switchUser('company')"><img :src="company"></a>
@@ -36,7 +36,7 @@ export default {
       student: require("./images/student.svg"),
       university: require("./images/university.svg"),
       company: require("./images/company.svg"),
-      test: false
+      dev: false
     }
   },
   watch: {
@@ -46,23 +46,21 @@ export default {
       if(["student", "university", "company"].indexOf(user) != -1) {
         localStorage.setItem("accountType", user)
         console.log(`AccountType has been changed to ${user}.`)
-      } else {
-        localStorage.setItem("accountType", "student")
       }
     },
-    isTest() {
-      this.test = localStorage.getItem('test') !== null
+    isDev() {
+      this.dev = localStorage.getItem('dev') !== null
     }
   },
   created() {
     setTimeout(() => {
       if(this.$route.query.dev != null) {
-        localStorage.setItem('test', "1")
+        localStorage.setItem('dev', "1")
       }
-      if(this.$route.query.dev == null) {
-        localStorage.removeItem('test')
+      if(this.$route.query.prod != null) {
+        localStorage.removeItem('dev')
       }
-      this.isTest()
+      this.isDev()
       this.switchUser(localStorage.getItem("accountType"))
     }, 500)
   },
@@ -136,6 +134,10 @@ h6 {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
   background-repeat: repeat-x;
   border-color: #3e8f3e;
+}
+
+.btn-success:hover {
+  color: white !important;
 }
 
 .btn-default {

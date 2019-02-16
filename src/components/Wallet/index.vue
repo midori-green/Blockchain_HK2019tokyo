@@ -16,6 +16,9 @@ export default {
   },
 
   methods: {
+    getAccountType() {
+      return localStorage.getItem("accountType")
+    },
     resetWallet() {
       this.wif = null
       if(this.wif == null) {
@@ -39,7 +42,11 @@ export default {
       account = new Account(wif)
 
       this.address = account.address
-      account.getBalance().then((ret) => {
+      let includeUnconfirmed = false
+      if(localStorage.getItem("test") != null) {
+        includeUnconfirmed = true
+      }
+      account.getBalance(includeUnconfirmed).then((ret) => {
         if(wif == null) {
           location.reload()
         }

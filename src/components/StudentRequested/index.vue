@@ -16,9 +16,22 @@ export default {
     }
   },
   mounted() {
-    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid}　
+    let hash = null
+    let email = null
+    if(localStorage.getItem("dev") != null) {
+      hash = "679f02ca9d9c789175af3a75dd6b88d5c05f734f0abfe3b61ed9178175f11152"
+      email = "m@jiyu.green"
+    }
+
+    let link_url = `http://${location.host}/university/sign?txid=${this.txid}&hash=${hash}&email=${email}&redeemScript=${this.redeemScript}`
+    link_url = encodeURIComponent(link_url)
+
+    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid}
+
 以上の情報を検証し、正しければ以下のリンクから署名をしてください。　
-http://localhost:8101/university/sign?redeemScript=${this.redeemScript}&txid=${this.txid}`
+
+${link_url}
+`
 
     this.email_link = `mailto:${this.email}?subject=${this.subject}&body=${this.body}`
   }

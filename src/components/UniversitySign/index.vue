@@ -32,6 +32,9 @@ export default {
         const account = this.$store.state.account
         const redeemScript = Buffer.from(this.redeemScript, 'hex')
         const decodedScript = script.decodeIssueRedeemScript(redeemScript)
+        console.log("decodedScript", decodedScript)
+        console.log("1","2","3", Buffer.from(merged, 'hex'),decodedScript.certOwnerPubKeyHash,
+          account)
         const certSig = await txn.getCertSigBySigning(
           Buffer.from(merged, 'hex'),
           decodedScript.certOwnerPubKeyHash,
@@ -85,6 +88,10 @@ export default {
     }
   },
   mounted() {
+    if(localStorage.getItem("test") != null) {
+      this.hash = "679f02ca9d9c789175af3a75dd6b88d5c05f734f0abfe3b61ed9178175f11152"
+      this.email = "m@jiyu.green"
+    }
   }
 }
 </script>

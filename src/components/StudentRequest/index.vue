@@ -18,7 +18,7 @@ export default {
       hashed_cert: null,
       hashed_meta: null,
       address: this.$route.query.address, // univ bch address
-      mail: this.$route.query.mail, // univ email
+      email: this.$route.query.email, // univ email
     }
   },
   methods: {
@@ -47,7 +47,7 @@ export default {
           query: {
             txid: txid,
             redeemScript: redeemScript.toString('hex'),
-            email: this.mail
+            email: this.email
           },
         })
       } else {

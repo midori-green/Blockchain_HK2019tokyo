@@ -24,9 +24,9 @@ export class Account {
     this.hash160 = bitbox.Address.toHash160(this.address);
   }
 
-  async getBalance() {
+  async getBalance(includeUnconfirmed = false) {
     const details = await bitbox.Address.details(this.address);
 
-    return details.balance;
+    return includeUnconfirmed ? details.balance + details.unconfirmedBalance : details.balance;
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable */
-process.title = "greenverify"
+process.title = "verify.green"
 
 import Vue from 'vue'
 import App from './App.vue'

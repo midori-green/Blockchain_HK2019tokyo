@@ -16,12 +16,23 @@
 
     <b-row class="input_fields">
       <b-col>
-        <h5>ウォレット情報</h5>
-        <b-form-input type="text" v-model="wif" />
+        <template v-if="getAccountType() == 'student'">
+          <router-link to="/student/request?hash=679f02ca9d9c789175af3a75dd6b88d5c05f734f0abfe3b61ed9178175f11152&address=bitcoincash:qqlqejqa47kxt0kyyal9zzd0aejjlh60jvea5m6ez5&email=m@jiyu.green" class="btn btn-success">証明書の登録を大学に請求する</router-link>
+        </template>
+        <template v-else-if="getAccountType() == 'university'">
+          <router-link to="/university/sign" class="btn btn-success">証明書への署名発行</router-link>
+        </template>
+        <template v-else-if="getAccountType() == 'company'">
+          <router-link to="/company/request" class="btn btn-success">証明書の署名を学生に要求する</router-link>
+        </template>
       </b-col>
     </b-row>
 
     <b-row class="input_fields">
+      <b-col class="wif">
+        <b-form-input type="text" v-model="wif" />
+      </b-col>
+
       <b-col>
         <b-button class="btn btn-success" v-on:click="importWIF">WIFからウォレット作成</b-button>
       </b-col>
