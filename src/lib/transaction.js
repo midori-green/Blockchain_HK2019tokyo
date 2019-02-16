@@ -79,8 +79,8 @@ export function getCertSigBySigning(digest, hash160, account) {
  * @param {Account} account
  * @param {Buffer} certSig
  * @param {string} txid
- * @param {number} vout
  * @param {Buffer} redeemScript
+ * @param {number} vout
  */
 export async function signWithCert(account, certSig, prevTxid, redeemScript, vout = 0) {
   const txb = new bitbox.TransactionBuilder(network)
