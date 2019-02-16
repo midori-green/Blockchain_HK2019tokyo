@@ -59,9 +59,7 @@ export default {
     exportWIF() {
       let b = require("../../lib/blob.js")
       let blob = new b.BlobModule()
-      let wif = localStorage.getItem('wif')
-      let accountType = localStorage.getItem('accountType')
-      blob.download(wif, `wif_${accountType}.txt`)
+      blob.download(localStorage.getItem('wif'), `wif.txt`)
     }
   },
   watch: {

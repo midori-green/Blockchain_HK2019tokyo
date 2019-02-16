@@ -17,10 +17,12 @@ export default {
     }
   },
   mounted() {
-    let link_url = `http://localhost:8101/student/sign?redeemScript=${this.redeemScript}&txid=${this.txid}`
+    let link_url = `http://localhost:8101/student/sign?redeemScript=${this.redeemScript}&txid=${this.txid}&email=${this.replyEmail}`
     link_url = encodeURIComponent(link_url)
-    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid}, 返信先アドレス: ${this.replyEmail}　
+    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid},
+
 以上の情報を検証し、正しければ以下のリンクから署名をしてください。　
+
 ${link_url}
 `
 

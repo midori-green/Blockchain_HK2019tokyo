@@ -86,6 +86,15 @@ export default {
       fileReader.readAsArrayBuffer(file);
     }
   },
+  created() {
+    if(localStorage.getItem("dev") != null) {
+      this.hash = "679f02ca9d9c789175af3a75dd6b88d5c05f734f0abfe3b61ed9178175f11152"
+      this.pubkey = "02ec6cf9a8d7281fd89ecde4f5ccfc09290785e56f1080861ec33a86a8096ed646",
+      this.studentMail = "m@jiyu.green"
+      this.replyMail = "m@jiyu.green"
+      this.studentAddress = "bitcoincash:qzqczdggrycp969lxtup0qmszltsfpv2hufexsxjg0"
+    }
+  },
   mounted() {
   }
 }
