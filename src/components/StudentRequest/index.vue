@@ -3,6 +3,10 @@
 
 <script>
 import BITBOXSDK from 'bitbox-sdk/lib/bitbox-sdk'
+import * as txn from '../../lib/transaction'
+import * as script from '../../lib/script'
+import { network } from '../../lib/network';
+
 const bitbox = new BITBOXSDK()
 
 export default {
@@ -12,18 +16,40 @@ export default {
       meta: null,
       hash: this.$route.query.hash,
       hashed_cert: null,
-      hashed_meta: null
+      hashed_meta: null,
+      address: this.$route.query.address, // univ bch address
+      mail: this.$route.query.mail, // univ email
     }
   },
   methods: {
     sha256(v) {
       return bitbox.Crypto.sha256(v).toString("hex")
     },
-    verifyAndSend() {
+    async verifyAndSend() {
       let merged = this.sha256(this.hashed_cert + this.hashed_meta)
 
       if(merged === this.hash) {
-        this.$router.push("/")
+        const account = this.$store.state.account
+        const redeemScript = script.getIssueRedeemScript(
+          account.pubKey,
+          3,
+          Buffer.from(bitbox.Address.toHash160(this.address), 'hex'),
+          Buffer.from(merged, 'hex'),
+          account.hash160,
+        )
+        const destAddress = script.getP2SHAddress(redeemScript, network)
+
+        // const txid = await txn.simpleSend(account, destAddress, 1000)
+        const txid = 'dummy-txid'
+
+        this.$router.push({
+          path: 'requested',
+          query: {
+            txid: txid,
+            redeemScript: redeemScript.toString('hex'),
+            mail: this.mail
+          },
+        })
       } else {
         alert("Verification Failed")
       }
