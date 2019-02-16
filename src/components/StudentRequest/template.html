@@ -1,7 +1,5 @@
 <div>
   <b-container>
-
-    <img :src="image">
     <b-row class="input_fields">
       <b-col>
         <h4>証明書の登録を大学に請求する</h4>
@@ -17,18 +15,19 @@
     </b-row>
     <b-row class="input_fields">
       <b-col>
-        <b-form-textarea
-          ref="meta"
-          v-model="meta"
-          placeholder="メタデータを入力してください"
-          rows="5"
-          max-rows="6"
-        />
+        <b-form-file id="meta"
+          v-model="meta" :state="Boolean(cert)" placeholder="メタデータをアップロードしてください"
+          drop-placeholder="メタデータをドラッグ＆ドロップしてください" />
       </b-col>
     </b-row>
     <b-row class="input_fields">
       <b-col>
-        <b-form-input ref="hash" v-model="hash" type="text" placeholder="ハッシュ値を入力してください" />
+        <b-form-input v-model="hash" type="text" placeholder="ハッシュ値を入力してください" />
+      </b-col>
+    </b-row>
+    <b-row class="input_fields">
+      <b-col>
+        <b-button ref="submit" type="submit" class="btn btn-success" v-on:click="verifyAndSend">依頼する</b-button>
       </b-col>
     </b-row>
   </b-container>
