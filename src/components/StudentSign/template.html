@@ -8,35 +8,31 @@
       </b-col>
     </b-row>
 
-    <b-row>
+    <b-row class="input_fields">
       <b-col>
+        <b-form-input type="text" v-model="redeemScript" placeholder="Redeem Script を入れてください" />
       </b-col>
     </b-row>
 
-    <b-row>
+    <b-row class="input_fields">
       <b-col>
-        <b-form-input type="text" v-model="redeemScript" placeholder="Redeem Script" />
+        <b-form-input type="text" v-model="certTxid" placeholder="大学が署名に使ったトランザクションのIDを入れてください" />
       </b-col>
     </b-row>
 
-    <b-row>
+    <b-row class="input_fields">
       <b-col>
-        <div class="latest">
-          <h3>大学への署名の要求</h3>
-        </div>
+        <b-form-input type="text" v-model="txid" placeholder="企業が作成したトランザクションのIDを入れてください" />
       </b-col>
     </b-row>
 
-    <input type="text" v-model="redeemScript" placeholder="Redeem Script">
-    <input type="text" v-model="certTxid" placeholder="cert txid">
-    <input type="text" v-model="txid" placeholder="txid">
-    <input type="text" v-model="mail" placeholder="mail address"><br>
-    <button v-on:click="sign">Sign tx</button><br>
-
-    <b-row>
+    <b-row class="input_fields">
       <b-col>
-        <div class="notify" id="notify"></div>
+        <b-form-input type="text" v-model="email" placeholder="emailを入れてください" />
       </b-col>
     </b-row>
+
+    <b-button class="input_fields" v-on:click="sign">Sign tx</b-button>
+
   </b-container>
 </div>

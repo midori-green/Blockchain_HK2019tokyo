@@ -7,10 +7,10 @@ import * as txn from '../../lib/transaction'
 export default {
   data() {
     return {
-      redeemScript: '',
-      certTxid: '',
-      txid: '',
-      mail: '',
+      redeemScript: this.$route.query.redeemScript,
+      certTxid: this.$route.query.certTxid,
+      txid: this.$route.query.txid,
+      email: this.$route.query.email,
     }
   },
   methods: {
