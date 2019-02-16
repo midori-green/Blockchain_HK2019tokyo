@@ -5,7 +5,7 @@
 import BITBOXSDK from 'bitbox-sdk/lib/bitbox-sdk'
 import * as txn from '../../lib/transaction'
 import * as script from '../../lib/script'
-import {network} from '../../lib/network'
+import { network } from '../../lib/network'
 
 const bitbox = new BITBOXSDK()
 
@@ -15,61 +15,75 @@ export default {
       cert: null,
       meta: null,
       hash: null,
-      pubkey: null,
-      studentMail: null,
-      replyMail: null,
-      studentAddress: null,
-      hashedData: null,
+      pubkey: this.$route.query.UnivPubKey,
+      studentMail: this.$route.query.studentMail,
+      replyMail: this.$route.query.studentMail,
+      studentAddress: this.$route.query.studentAddress,
     }
   },
   methods: {
-    async sendTx() {
-      const account = this.$store.state.account
-      const studentHash160 = Buffer.from(bitbox.Address.toHash160(this.studentAddress), 'hex')
-      const redeemScript = script.getVerifyRedeemScript(
-        account.pubkey,
-        3,
-        this.pubkey,
-        studentHash160,
-        this.hashedData
-      )
-      const destAddress = script.getP2SHAddress(redeemScript, network)
-      // const txid = await txn.simpleSend(account, destAddress, 1000)
-      const txid = 'hoge'
+    sha256(v) {
+      return bitbox.Crypto.sha256(v).toString("hex")
+    },
+    async verifyAndSend() {
+      let merged = this.sha256(this.hashed_cert + this.hashed_meta)
 
-      this.$router.push({
-        path: 'requested',
-        query: {
-          txid: ret,
-          redeemScript: redeemScript.toString('hex'),
-          studentMail: studentMail,
-          replyMail: replyMail,
-        }
-      })
+      if(merged === this.hash) {
+        const account = this.$store.state.account
+        const studentHash160 = Buffer.from(bitbox.Address.toHash160(this.studentAddress), 'hex')
+        const redeemScript = script.getVerifyRedeemScript(
+          account.pubkey,
+          3,
+          this.pubkey,
+          studentHash160,
+          Buffer.from(merged, 'hex')
+        )
+        const destAddress = script.getP2SHAddress(redeemScript, network)
+        // const txid = await txn.simpleSend(account, destAddress, 1000)
+        const txid = 'dummy-txid'
+
+        this.$router.push({
+          path: 'requested',
+          query: {
+            txid: txid,
+            redeemScript: redeemScript.toString('hex'),
+            studentEmail: this.studentMail,
+            replyEmail: this.replyMail,
+          }
+        })
+      } else {
+        alert("Verification Failed")
+      }
     }
   },
   watch: {
     cert(v) {
-      // var createObjectURL = window.URL && window.URL.createObjectURL
-      //   ? function(file) { return window.URL.createObjectURL(file); }
-      //   : window.webkitURL && window.webkitURL.createObjectURL
-      //   ? function(file) { return window.webkitURL.createObjectURL(file); }
-      //   : undefined;
-      const file = document.getElementById("cert").files[0]
-      const fileReader = new FileReader();
+      this.$refs.submit.setAttribute("disabled", true)
+
+      let file = document.getElementById("cert").files[0]
+      var fileReader = new FileReader();
       fileReader.onload = e => {
-        const raw = e.target.result
-        const rawBytes = new Uint8Array(raw);
-        const hashedData = bitbox.Crypto.sha256(rawBytes)
-        const hashStr = hashedData.toString("hex")
-        if(hashedData === this.hash) {
-          this.hashedData = hashedData
-        } else {
-          console.log(hashedData, this.hash)
-        }
+        let raw = e.target.result
+        var rawBytes = new Uint8Array(raw);
+        this.hashed_cert = this.sha256(rawBytes).toString("hex")
+
+        this.$refs.submit.removeAttribute("disabled")
       }
       fileReader.readAsArrayBuffer(file);
+    },
+    meta(v) {
+      this.$refs.submit.setAttribute("disabled", true)
 
+      let file = document.getElementById("meta").files[0]
+      var fileReader = new FileReader();
+      fileReader.onload = e => {
+        let raw = e.target.result
+        var rawBytes = new Uint8Array(raw);
+        this.hashed_meta = this.sha256(rawBytes).toString("hex")
+
+        this.$refs.submit.removeAttribute("disabled")
+      }
+      fileReader.readAsArrayBuffer(file);
     }
   },
   mounted() {

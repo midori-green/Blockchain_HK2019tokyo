@@ -1,7 +1,5 @@
 <div>
   <b-container>
-
-    <img :src="image">
     <b-row class="input_fields">
       <b-col>
         <h4>証明書の署名を学生に要求する</h4>
@@ -16,33 +14,41 @@
       </b-col>
     </b-row>
     <b-row class="input_fields">
+        <b-col>
+          <b-form-file id="meta"
+            v-model="meta" :state="Boolean(cert)" placeholder="メタデータをアップロードしてください"
+            drop-placeholder="メタデータをドラッグ＆ドロップしてください" />
+        </b-col>
+      </b-row>
+      <b-row class="input_fields">
       <b-col>
-        <b-form-textarea
-          ref="meta"
-          v-model="meta"
-          placeholder="メタデータを入力してください"
-          rows="5"
-          max-rows="6"
-        />
+        <b-form-input ref="hash" v-model="hash" type="text" placeholder="ハッシュ値を入力してください" />
       </b-col>
     </b-row>
     <b-row class="input_fields">
       <b-col>
-        <b-form-input ref="hash" v-model="hash" type="text" placeholder="ハッシュ値を入力してください" />
-      </b-col>
-      <b-col>
         <b-form-input ref="pubkey" v-model="pubkey" type="text" placeholder="大学のPubric Keyを入力してください" />
       </b-col>
+    </b-row>
+    <b-row class="input_fields">
       <b-col>
         <b-form-input ref="student-mail" v-model="studentMail" type="text" placeholder="学生のメールアドレスを入力してください" />
       </b-col>
+    </b-row>
+    <b-row class="input_fields">
       <b-col>
         <b-form-input ref="reply-mail" v-model="replyMail" type="text" placeholder="返信用メールアドレスを入力してください" />
       </b-col>
+    </b-row>
+    <b-row class="input_fields">
       <b-col>
         <b-form-input ref="student address" v-model="studentAddress" type="text" placeholder="学生のBCHアドレスを入力してください" />
       </b-col>
     </b-row>
-    <button v-on:click="sendTx">send tx</button>
+    <b-row class="input_fields">
+      <b-col>
+        <b-button ref="submit" type="submit" class="btn btn-success" v-on:click="verifyAndSend">依頼する</b-button>
+      </b-col>
+    </b-row>
   </b-container>
 </div>
