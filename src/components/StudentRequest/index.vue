@@ -39,8 +39,8 @@ export default {
         )
         const destAddress = script.getP2SHAddress(redeemScript, network)
 
-        // const txid = await txn.simpleSend(account, destAddress, 1000)
-        const txid = 'dummy-txid'
+        const txid = await txn.simpleSend(account, destAddress, 1000)
+        // const txid = 'dummy-txid'
 
         this.$router.push({
           path: 'requested',

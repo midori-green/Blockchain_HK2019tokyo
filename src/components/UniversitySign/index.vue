@@ -37,9 +37,8 @@ export default {
           decodedScript.certOwnerPubKeyHash,
           account
         )
-        // const txid = await txn.signWithCert(account, certSig, this.txid, redeemScript)
-        // const resultTxid = txid
-        const resultTxid = `certsig: ${certSig.toString('hex')}` // dummy
+        const resultTxid = await txn.signWithCert(account, certSig, this.txid, redeemScript)
+        // const resultTxid = `certsig: ${certSig.toString('hex')}` // dummy
         this.$router.push({
           path: 'signed',
           query: {
