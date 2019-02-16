@@ -11,7 +11,6 @@ export default {
       certTxid: '',
       txid: '',
       mail: '',
-      resultTxid: '',
     }
   },
   methods: {
@@ -20,8 +19,9 @@ export default {
       const certSig = await txn.getCertSigByTxid(this.certTxid)
       const redeemScript = Buffer.from(this.redeemScript, 'hex')
       // const txid = await txn.signWithCert(account, certSig, this.txid, redeemScript)
-      // this.resultTxid = txid
-      this.resultTxid = `certsig: ${certSig.toString('hex')}` // dummy
+      // const resultTxid = txid
+      const resultTxid = `certsig: ${certSig.toString('hex')}` // dummy
+      this.$router.push({path: 'signed', query: {txid: resultTxid}})
     }
   },
   mounted() {

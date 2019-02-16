@@ -5,25 +5,18 @@
 export default {
   data() {
     return {
-      copy: "Copy to Clipboard"
+      txid: ''
     }
   },
-  methods: {
-    onCopy() {
-      let toast = this.$toasted.show("Copied!", {
-        theme: "bubble",
-        position: "top-center",
-        duration : 1500
-      })
-      this.copy = "Copied!"
-    },
-    onCopyError() {
-      let toast = this.$toasted.show("Failed", {
-        theme: "outline",
-        position: "top-center",
-        duration : 1500
-      })
+  asyncData(context) {
+    return {
+      txid: context.query['txid']
     }
+  },
+
+  mounted() {
+    // console.log(this.$route.params)
+    this.txid = this.$route.query.txid
   }
 }
 </script>
