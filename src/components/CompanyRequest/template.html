@@ -1,26 +1,48 @@
 <div>
   <b-container>
-    <b-row>
-      <b-col>
-        <div class="latest">
-          <h3>aaa</h3>
-          <router-link class="latest btn btn-success" to="./block_latest">⚡Block 3⚡</router-link>
-        </div>
-      </b-col>
-    </b-row>
 
-    <b-row>
-      <b-col class="old">
-        <h4>bbb</h4>
-        <router-link class="btn btn-success" to="./block/1">Block 1</router-link>
-        <router-link class="btn btn-success" to="./block/2">Block 2</router-link>
-      </b-col>
-    </b-row>
-
-    <b-row>
+    <img :src="image">
+    <b-row class="input_fields">
       <b-col>
-        <div class="notify" id="notify"></div>
+        <h4>証明書の署名を学生に要求する</h4>
+        <p>学生から受け取った証明書、メタデータ、及びそのハッシュ値を入力してください。</p>
+        <b-form-file
+          id="cert"
+          v-model="cert"
+          :state="Boolean(cert)"
+          placeholder="証明書をアップロードしてください"
+          drop-placeholder="証明書をドラッグ＆ドロップしてください"
+        />
       </b-col>
     </b-row>
+    <b-row class="input_fields">
+      <b-col>
+        <b-form-textarea
+          ref="meta"
+          v-model="meta"
+          placeholder="メタデータを入力してください"
+          rows="5"
+          max-rows="6"
+        />
+      </b-col>
+    </b-row>
+    <b-row class="input_fields">
+      <b-col>
+        <b-form-input ref="hash" v-model="hash" type="text" placeholder="ハッシュ値を入力してください" />
+      </b-col>
+      <b-col>
+        <b-form-input ref="pubkey" v-model="pubkey" type="text" placeholder="大学のPubric Keyを入力してください" />
+      </b-col>
+      <b-col>
+        <b-form-input ref="student-mail" v-model="studentMail" type="text" placeholder="学生のメールアドレスを入力してください" />
+      </b-col>
+      <b-col>
+        <b-form-input ref="reply-mail" v-model="replyMail" type="text" placeholder="返信用メールアドレスを入力してください" />
+      </b-col>
+      <b-col>
+        <b-form-input ref="student address" v-model="studentAddress" type="text" placeholder="学生のBCHアドレスを入力してください" />
+      </b-col>
+    </b-row>
+    <button v-on:click="sendTx">send tx</button>
   </b-container>
 </div>

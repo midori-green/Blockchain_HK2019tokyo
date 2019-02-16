@@ -8,11 +8,6 @@ export default {
       txid: ''
     }
   },
-  asyncData(context) {
-    return {
-      txid: context.query['txid']
-    }
-  },
 
   mounted() {
     // console.log(this.$route.params)
