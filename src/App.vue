@@ -67,7 +67,6 @@ export default {
     switchUser(user) {
       if(["student", "university", "company"].indexOf(user) != -1) {
         localStorage.setItem("accountType", user)
-        console.log(`AccountType has been changed to ${user}.`)
       }
     },
     isDev() {
@@ -78,6 +77,9 @@ export default {
     setTimeout(() => {
       if(this.$route.query.dev != null) {
         localStorage.setItem('dev', "1")
+      }
+      if(this.$route.query.student != null) {
+        localStorage.setItem('accountType', "student")
       }
       if(this.$route.query.prod != null) {
         localStorage.removeItem('dev')

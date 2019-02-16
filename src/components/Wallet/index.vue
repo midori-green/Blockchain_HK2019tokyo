@@ -26,7 +26,7 @@ export default {
         if(window.confirm("ウォレットを作り直すと、古いウォレットは完全に削除され、残高は永久に引き落とせなくなります。ウォレットを作り直してもよろしいですか？")) {
           if(window.confirm("本当に消してしまうのですか？　戻せませんよ？")) {
             if(window.confirm("後悔しませんね？")) {
-              [...document.querySelectorAll('*')].map(e =>
+              [...document.querySelectorAll('button,input')].map(e =>
                 e.setAttribute("disabled", "disabled")
               )
               setTimeout(this.updateWallet, 500)
@@ -64,7 +64,7 @@ export default {
   },
   watch: {
     wif_file(v) {
-      let allAttributes = [...document.querySelectorAll('*')]
+      let allAttributes = [...document.querySelectorAll('button,input')]
       allAttributes.map(e => {
         e.setAttribute("disabled", "disabled")
       })

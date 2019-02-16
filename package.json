@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "lint": "vue-cli-service lint",
-    "b": "vue-cli-service build",
+    "b": "vue-cli-service build --mode development",
     "s": "vue-cli-service serve",
     "eb": "vue-cli-service electron:build",
     "es": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "stop": "pkill -f gc-client"
+    "stop": "pkill -f verify.green"
   },
   "dependencies": {
     "@babel/core": "^7.0.1",
+    "bip32": "^1.0.2",
     "bitbox-sdk": "^3.1.0",
     "bootstrap-vue": "^2.0.0-rc.11",
     "jquery": "^3.0.0",
@@ -25,13 +26,11 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@kazupon/vue-i18n-loader": "^0.3.0",
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "electron": "^2.0.0",
     "vue-cli-plugin-electron-builder": "^1.0.0-rc.9",
-    "vue-cli-plugin-i18n": "^0.5.0",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
