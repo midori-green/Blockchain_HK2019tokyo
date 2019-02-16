@@ -2,7 +2,16 @@
 <style src="./style.css" scoped></style>
 
 <script>
+// const sha256 = bitbox.Crypto.sha256(msg)
+
 export default {
+  data() {
+    return {
+      cert: null,
+      meta: null,
+      hash: null
+    }
+  },
   mounted() {
   }
 }
