@@ -47,7 +47,7 @@ export default {
           query: {
             txid: txid,
             redeemScript: redeemScript.toString('hex'),
-            mail: this.mail
+            email: this.mail
           },
         })
       } else {
