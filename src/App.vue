@@ -43,10 +43,13 @@ export default {
       if(["student", "university", "company"].indexOf(user) != -1) {
         localStorage.setItem("accountType", user)
         console.log(`AccountType has been changed to ${user}.`)
+      } else {
+        localStorage.setItem("accountType", "student")
       }
     }
   },
   created() {
+    this.switchUser(localStorage.getItem("accountType"))
   },
   mounted() {
     if (this.$store.state.account == null) {

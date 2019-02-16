@@ -23,7 +23,13 @@
 
     <b-row class="input_fields">
       <b-col>
-        <b-button class="btn btn-success" v-on:click="importWIF">WIFをインポート</b-button>
+        <b-button class="btn btn-success" v-on:click="importWIF">WIFからウォレット作成</b-button>
+      </b-col>
+    </b-row>
+
+    <b-row class="input_fields">
+      <b-col>
+        <b-button class="btn btn-info" v-on:click="exportWIF">WIFでウォレットをバックアップ</b-button>
       </b-col>
     </b-row>
 

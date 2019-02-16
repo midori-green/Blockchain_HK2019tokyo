@@ -47,6 +47,13 @@ export default {
       })
       localStorage.setItem('wif', account.wif) // TODO: encrypt/decrypt wif
       this.$store.state.account = account
+    },
+    exportWIF() {
+      let b = require("../../lib/blob.js")
+      let blob = new b.BlobModule()
+      let wif = localStorage.getItem('wif')
+      let accountType = localStorage.getItem('accountType')
+      blob.download(wif, `wif_${accountType}.txt`)
     }
   },
 
