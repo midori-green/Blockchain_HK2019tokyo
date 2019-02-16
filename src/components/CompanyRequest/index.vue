@@ -32,9 +32,9 @@ export default {
         const account = this.$store.state.account
         const studentHash160 = Buffer.from(bitbox.Address.toHash160(this.studentAddress), 'hex')
         const redeemScript = script.getVerifyRedeemScript(
-          account.pubkey,
+          account.pubKey,
           3,
-          this.pubkey,
+          Buffer.from(this.pubkey, 'hex'),
           studentHash160,
           Buffer.from(merged, 'hex')
         )
