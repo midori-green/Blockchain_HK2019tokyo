@@ -17,11 +17,11 @@ export default {
     }
   },
   mounted() {
-    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid}, 返信先アドレス: ${this.replyEmail}
-以上の情報を検証し、正しければ以下のリンクから署名をしてください。
+    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid}, 返信先アドレス: ${this.replyEmail}　
+以上の情報を検証し、正しければ以下のリンクから署名をしてください。　
 http://localhost:8101/university/sign?redeemScript=${this.redeemScript}&txid=${this.txid}`
 
-    this.email_link = `mailto:${this.studentEmail}?subject=${this.subject}&amp;body=${this.body}`
+    this.email_link = `mailto:${this.studentEmail}?subject=${this.subject}&body=${this.body}`
   }
 }
 </script>

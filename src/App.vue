@@ -200,6 +200,10 @@ header .btn {
   color: white;
 }
 
+#main .input_fields {
+  margin-top: 20px;
+}
+
 /* footer */
 
 footer {

@@ -1,5 +1,10 @@
 <div>
   <b-container>
-    TXID: {{txid}}
+    <b-row>
+      <b-col>
+        署名が完了しました。以下のURLで確認してください。<br>
+        <a :href="url">TXID: {{txid}}</a>
+      </b-col>
+    </b-row>
   </b-container>
 </div>

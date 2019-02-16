@@ -2,16 +2,14 @@
 <style src="./style.css" scoped></style>
 
 <script>
+let network = require("../../lib/network.js")
+
 export default {
   data() {
     return {
-      txid: ''
+      txid: this.$route.query.txid,
+      url: `${network.explorer}${this.txid}`
     }
-  },
-
-  mounted() {
-    // console.log(this.$route.params)
-    this.txid = this.$route.query.txid
   }
 }
 </script>
