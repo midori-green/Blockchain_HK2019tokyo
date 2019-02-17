@@ -16,14 +16,14 @@ export default {
     }
   },
   mounted() {
-    let hash = null
-    let email = null
+    let hash = ""
+    let email = ""
     if(localStorage.getItem("dev") != null) {
-      hash = "679f02ca9d9c789175af3a75dd6b88d5c05f734f0abfe3b61ed9178175f11152"
-      email = "m@jiyu.green"
+      hash = "&hash=679f02ca9d9c789175af3a75dd6b88d5c05f734f0abfe3b61ed9178175f11152"
+      email = "&email=m@jiyu.green"
     }
 
-    let link_url = `http://${location.host}/university/sign?txid=${this.txid}&hash=${hash}&email=${email}&redeemScript=${this.redeemScript}`
+    let link_url = `http://${location.host}/university/sign?txid=${this.txid}${hash}${email}&redeemScript=${this.redeemScript}`
     link_url = encodeURIComponent(link_url)
 
     this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid}
