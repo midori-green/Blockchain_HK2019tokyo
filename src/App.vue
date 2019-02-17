@@ -2,7 +2,7 @@
   <div id="app">
     <header>
       <div>
-        <router-link id="logo" class="btn" to="/">Green Verify</router-link>
+        <router-link id="logo" class="btn" to="/">Verify.green</router-link>
         <template v-if="dev">
           <a class="btn" v-on:click="switchUser('student')"><img :src="student"></a>
           <a class="btn" v-on:click="switchUser('university')"><img :src="university"></a>
@@ -19,7 +19,8 @@
         </div>
 
         <div class="license">
-          [MIT License] Copyright (c) 2019 MIDORI, LLC.
+          このアプリは<a href="https://www.eventbrite.com/e/2019-tickets-55006025503" target="_blank">ブロックチェーンハッカソン2019</a>提出作品です。<br>
+          Licensed under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>
         </div>
       </b-col>
     </footer>
@@ -41,19 +42,23 @@ export default {
   },
   watch: {
     "$route"(v) {
-      if(localStorage.getItem("dev")) {
+      this.updateWallet()
+    }
+  },
+  methods: {
+    updateWallet() {
+      let v = this.$route
+      if(this.isDev()) {
         let wif = null
-        if(v.path.includes("student")) {
-          this.switchUser("student")
-          wif = "L3Mq8X2tq95WYySdwo8HZtoEmVDnKGfdb6pTozq1nd8qrMaBhXvb"
-        } else if(v.path.includes("university")) {
-          this.switchUser("university")
+        if(v.path.includes("university")) {
+          localStorage.setItem("accountType", "university")
           wif = "L378rkMAtZVXcsztHH4czvcr1ir9AXwqc166EXLdHiL2AAGQCeia"
         } else if(v.path.includes("company")) {
-          this.switchUser("company")
+          localStorage.setItem("accountType", "company")
           wif = "L2Xh3PKNCDK1CXHvtuMKCXv4pPbh6sjsWTehdRP77ERwnMkf1VWx"
         } else {
-          return false
+          localStorage.setItem("accountType", "student")
+          wif = "L3Mq8X2tq95WYySdwo8HZtoEmVDnKGfdb6pTozq1nd8qrMaBhXvb"
         }
 
         let account = new Account(wif)
@@ -61,32 +66,36 @@ export default {
         localStorage.setItem('wif', account.wif) // TODO: encrypt/decrypt wif
         this.$store.state.account = account
       }
-    }
-  },
-  methods: {
+    },
     switchUser(user) {
       if(["student", "university", "company"].indexOf(user) != -1) {
         localStorage.setItem("accountType", user)
-        console.log(`AccountType has been changed to ${user}.`)
+        this.updateWallet()
       }
     },
     isDev() {
-      this.dev = localStorage.getItem('dev') !== null
+      this.dev = localStorage.getItem('dev') !== null || this.$route.query.dev != null
+      return this.dev
     }
   },
   created() {
     setTimeout(() => {
-      if(this.$route.query.dev != null) {
+      if(this.isDev()) {
         localStorage.setItem('dev', "1")
+        if(localStorage.getItem("accountType") == null) {
+          localStorage.setItem("accountType", "student")
+        }
       }
       if(this.$route.query.prod != null) {
         localStorage.removeItem('dev')
       }
-      this.isDev()
       this.switchUser(localStorage.getItem("accountType"))
     }, 500)
   },
   mounted() {
+    if(localStorage.getItem("accountType") == null) {
+      this.switchUser("student")
+    }
     if (this.$store.state.account == null) {
       const wif = localStorage.getItem('wif') // TODO: encrypt/decrypt wif
       this.$store.state.account = new Account(wif)

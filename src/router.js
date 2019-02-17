@@ -60,22 +60,10 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './components/StudentSigned/index.vue')
     },
     {
-      path: '/register',
-      name: 'Register',
-      // lazy load
-      component: () => import(/* webpackChunkName: "about" */ './components/Register/index.vue')
-    },
-    {
       path: '/wallet',
       name: 'Wallet',
       // lazy load
       component: () => import(/* webpackChunkName: "about" */ './components/Wallet/index.vue')
-    },
-    {
-      path: '/test',
-      name: 'test',
-      // lazy load
-      component: () => import(/* webpackChunkName: "about" */ './components/Test/index.vue')
     },
     {
       path: "*",

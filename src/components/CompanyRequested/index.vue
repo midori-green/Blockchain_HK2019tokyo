@@ -19,7 +19,7 @@ export default {
   mounted() {
     let link_url = `http://${location.host}/student/sign?redeemScript=${this.redeemScript}&txid=${this.txid}&email=${this.replyEmail}`
     link_url = encodeURIComponent(link_url)
-    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid},
+    this.body = `redeemScript: ${this.redeemScript}, txinfo: ${network.explorer}${this.txid} ,
 
 以上の情報を検証し、正しければ以下のリンクから署名をしてください。　
 

@@ -26,6 +26,7 @@ export default {
       return bitbox.Crypto.sha256(v).toString("hex")
     },
     async verifyAndSend() {
+      let loading = this.$loading.show()
       let merged = this.sha256(this.hashed_cert + this.hashed_meta)
 
       if(merged === this.hash) {
@@ -40,7 +41,6 @@ export default {
         const destAddress = script.getP2SHAddress(redeemScript, network)
 
         const txid = await txn.simpleSend(account, destAddress, 1000)
-        // const txid = 'dummy-txid'
 
         this.$router.push({
           path: 'requested',
@@ -51,8 +51,13 @@ export default {
           },
         })
       } else {
-        alert("Verification Failed")
+        this.$toasted.show("Verification Failed", {
+          theme: "outline",
+          position: "top-center",
+          duration : 1500
+        })
       }
+      loading.hide()
     },
     saveHash(key, value) {
       this[key] = value
