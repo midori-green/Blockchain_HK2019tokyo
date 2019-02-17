@@ -20,7 +20,7 @@
 
         <div class="license">
           このアプリは<a href="https://www.eventbrite.com/e/2019-tickets-55006025503" target="_blank">ブロックチェーンハッカソン2019</a>提出作品です。<br>
-          [Licensed by MIT License]
+          Licensed under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>
         </div>
       </b-col>
     </footer>
