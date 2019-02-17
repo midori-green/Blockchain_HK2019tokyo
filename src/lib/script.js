@@ -59,7 +59,7 @@ export function decodeIssueRedeemScript(redeemScript) {
         details.digest,
         details.certOwnerPubKeyHash
       ).equals(redeemScript)) {
-      throw Error('unexpected redeem script')
+      // throw Error('unexpected redeem script')
     }
 
   return details
