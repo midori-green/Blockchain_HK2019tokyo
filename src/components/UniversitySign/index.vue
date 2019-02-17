@@ -26,6 +26,8 @@ export default {
       return bitbox.Crypto.sha256(v).toString("hex")
     },
     async sign() {
+      let loading = this.$loading.show()
+
       const merged = this.sha256(this.hashed_cert + this.hashed_meta)
 
       if(merged === this.hash) {
@@ -49,12 +51,6 @@ export default {
             email: this.email,
           }
         })
-
-        this.$toasted.show("Verification Succeeded!", {
-          theme: "bubble",
-          position: "top-center",
-          duration : 1500
-        })
       } else {
         this.$toasted.show("Verification Failed", {
           theme: "outline",
@@ -62,6 +58,7 @@ export default {
           duration : 1500
         })
       }
+      loading.hide()
     },
     saveHash(key, value) {
       this[key] = value

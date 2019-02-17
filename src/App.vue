@@ -19,7 +19,8 @@
         </div>
 
         <div class="license">
-          [MIT License] このアプリは<a href="https://www.eventbrite.com/e/2019-tickets-55006025503" target="_blank">ブロックチェーンハッカソン2019</a>提出作品です。
+          このアプリは<a href="https://www.eventbrite.com/e/2019-tickets-55006025503" target="_blank">ブロックチェーンハッカソン2019</a>提出作品です。<br>
+          [Licensed by MIT License]
         </div>
       </b-col>
     </footer>
@@ -41,19 +42,23 @@ export default {
   },
   watch: {
     "$route"(v) {
-      if(localStorage.getItem("dev")) {
+      this.updateWallet()
+    }
+  },
+  methods: {
+    updateWallet() {
+      let v = this.$route
+      if(localStorage.getItem("dev") || this.$route.query.dev != null) {
         let wif = null
-        if(v.path.includes("student")) {
-          this.switchUser("student")
-          wif = "L3Mq8X2tq95WYySdwo8HZtoEmVDnKGfdb6pTozq1nd8qrMaBhXvb"
-        } else if(v.path.includes("university")) {
-          this.switchUser("university")
+        if(v.path.includes("university")) {
+          localStorage.setItem("accountType", "university")
           wif = "L378rkMAtZVXcsztHH4czvcr1ir9AXwqc166EXLdHiL2AAGQCeia"
         } else if(v.path.includes("company")) {
-          this.switchUser("company")
+          localStorage.setItem("accountType", "company")
           wif = "L2Xh3PKNCDK1CXHvtuMKCXv4pPbh6sjsWTehdRP77ERwnMkf1VWx"
         } else {
-          return false
+          localStorage.setItem("accountType", "student")
+          wif = "L3Mq8X2tq95WYySdwo8HZtoEmVDnKGfdb6pTozq1nd8qrMaBhXvb"
         }
 
         let account = new Account(wif)
@@ -61,12 +66,11 @@ export default {
         localStorage.setItem('wif', account.wif) // TODO: encrypt/decrypt wif
         this.$store.state.account = account
       }
-    }
-  },
-  methods: {
+    },
     switchUser(user) {
       if(["student", "university", "company"].indexOf(user) != -1) {
         localStorage.setItem("accountType", user)
+        this.updateWallet()
       }
     },
     isDev() {
@@ -89,6 +93,9 @@ export default {
     }, 500)
   },
   mounted() {
+    if(localStorage.getItem("accountType") == null) {
+      this.switchUser("student")
+    }
     if (this.$store.state.account == null) {
       const wif = localStorage.getItem('wif') // TODO: encrypt/decrypt wif
       this.$store.state.account = new Account(wif)

@@ -40,7 +40,9 @@ export default {
       this.wif = null
     },
     updateWallet(wif = null) {
-      account = new Account(wif)
+      let loading = this.$loading.show()
+
+      let account = new Account(wif)
 
       this.address = account.address
       let includeUnconfirmed = false
@@ -52,6 +54,7 @@ export default {
           location.reload()
         }
         this.balance = ret
+        loading.hide()
       })
       localStorage.setItem('wif', account.wif) // TODO: encrypt/decrypt wif
       this.$store.state.account = account

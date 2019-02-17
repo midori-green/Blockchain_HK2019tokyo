@@ -15,6 +15,7 @@ export default {
   },
   methods: {
     async sign() {
+      let loading = this.$loading.show()
       this.$refs.submit.setAttribute("disabled", true)
 
       const account = this.$store.state.account
@@ -24,6 +25,7 @@ export default {
       this.$router.push({path: 'signed', query: { txid: txid, email: this.email }})
 
       this.$refs.submit.removeAttribute("disabled")
+      loading.hide()
     }
   },
   mounted() {
