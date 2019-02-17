@@ -74,7 +74,7 @@ export default {
       }
     },
     isDev() {
-      this.dev = localStorage.getItem('dev') !== null
+      this.dev = localStorage.getItem('dev') !== null || this.$route.query.dev != null
     }
   },
   created() {
