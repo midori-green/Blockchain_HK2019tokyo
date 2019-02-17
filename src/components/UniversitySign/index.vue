@@ -49,8 +49,18 @@ export default {
             email: this.email,
           }
         })
+
+        this.$toasted.show("Verification Succeeded!", {
+          theme: "bubble",
+          position: "top-center",
+          duration : 1500
+        })
       } else {
-        alert("Verification Failed")
+        this.$toasted.show("Verification Failed", {
+          theme: "outline",
+          position: "top-center",
+          duration : 1500
+        })
       }
     },
     saveHash(key, value) {

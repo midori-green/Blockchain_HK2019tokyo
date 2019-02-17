@@ -74,7 +74,7 @@ export default {
         this.wif = e.target.result.trim()
         this.importWIF()
 
-        this.$toasted.show("Succeed to update!", {
+        this.$toasted.show("Update Succeeded!", {
           theme: "bubble",
           position: "top-center",
           duration : 1500

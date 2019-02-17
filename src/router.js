@@ -66,12 +66,6 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './components/Wallet/index.vue')
     },
     {
-      path: '/test',
-      name: 'test',
-      // lazy load
-      component: () => import(/* webpackChunkName: "about" */ './components/Test/index.vue')
-    },
-    {
       path: "*",
       // lazy load
       component: () => import('./components/404/index.vue'),
