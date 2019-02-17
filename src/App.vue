@@ -48,7 +48,7 @@ export default {
   methods: {
     updateWallet() {
       let v = this.$route
-      if(localStorage.getItem("dev") || this.$route.query.dev != null) {
+      if(this.isDev()) {
         let wif = null
         if(v.path.includes("university")) {
           localStorage.setItem("accountType", "university")
@@ -79,16 +79,12 @@ export default {
   },
   created() {
     setTimeout(() => {
-      if(this.$route.query.dev != null) {
+      if(this.isDev()) {
         localStorage.setItem('dev', "1")
-      }
-      if(this.$route.query.student != null) {
-        localStorage.setItem('accountType', "student")
       }
       if(this.$route.query.prod != null) {
         localStorage.removeItem('dev')
       }
-      this.isDev()
       this.switchUser(localStorage.getItem("accountType"))
     }, 500)
   },
