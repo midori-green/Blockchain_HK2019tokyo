@@ -81,6 +81,9 @@ export default {
     setTimeout(() => {
       if(this.isDev()) {
         localStorage.setItem('dev', "1")
+        if(localStorage.getItem("accountType") == null) {
+          localStorage.setItem("accountType", "student")
+        }
       }
       if(this.$route.query.prod != null) {
         localStorage.removeItem('dev')
