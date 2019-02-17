@@ -48,9 +48,7 @@ export default {
   methods: {
     updateWallet() {
       let v = this.$route
-      console.log("isDev vefore", this.isDev())
       if(this.isDev()) {
-        console.log("isDev", this.isDev())
         let wif = null
         if(v.path.includes("university")) {
           localStorage.setItem("accountType", "university")
