@@ -15,7 +15,6 @@ export default {
       cert: null,
       meta: null,
       hash: null,
-      pubkey: this.$route.query.UnivPubKey,
       univAddress: this.$route.query.univAddress,
       studentMail: this.$route.query.studentMail,
       replyMail: this.$route.query.studentMail,
@@ -27,6 +26,23 @@ export default {
       return bitbox.Crypto.sha256(v).toString("hex")
     },
     async verifyAndSend() {
+      //       cert: null,
+      // meta: null,
+      // hash: null,
+      // univAddress: this.$route.query.univAddress,
+      // studentMail: this.$route.query.studentMail,
+      // replyMail: this.$route.query.studentMail,
+      // studentAddress: this.$route.query.studentAddress,
+
+      if(!this.cert || !this.meta || !this.hash || !this.univAddress || !this.studentMail || !this.replyMail || !this.studentAddress) {
+        this.$toasted.show("Fill all fields", {
+          theme: "outline",
+          position: "top-center",
+          duration : 1500
+        })
+        return false
+      }
+
       let loading = this.$loading.show()
       let merged = this.sha256(this.hashed_cert + this.hashed_meta)
 

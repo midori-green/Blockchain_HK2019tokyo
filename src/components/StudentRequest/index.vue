@@ -26,6 +26,15 @@ export default {
       return bitbox.Crypto.sha256(v).toString("hex")
     },
     async verifyAndSend() {
+      if(!this.cert || !this.meta || !this.hash || !this.address || !this.email) {
+        this.$toasted.show("Fill all fields", {
+          theme: "outline",
+          position: "top-center",
+          duration : 1500
+        })
+        return false
+      }
+
       let loading = this.$loading.show()
       let merged = this.sha256(this.hashed_cert + this.hashed_meta)
 

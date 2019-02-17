@@ -15,6 +15,15 @@ export default {
   },
   methods: {
     async sign() {
+      if(!this.redeemScript || !this.certTxid || !this.txid || !this.$route.query.txid || !this.email) {
+        this.$toasted.show("Fill all fields", {
+          theme: "outline",
+          position: "top-center",
+          duration : 1500
+        })
+        return false
+      }
+
       let loading = this.$loading.show()
       this.$refs.submit.setAttribute("disabled", true)
 
